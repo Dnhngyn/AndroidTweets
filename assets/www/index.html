@@ -1,0 +1,149 @@
+<!DOCtype="text/javascript" src html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-type="text/javascript" src" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>   <!--(see note 1) -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+  <link rel="stylesheet" href="themes/test.min.css" />
+  <link href="style.css" rel="stylesheet" type="text/javascript" src="text/css">
+  <script type="text/javascript" src="cordova-2.1.0.js"></script>
+  <script src="test.js"></script>
+  <script src="test2.js"></script>
+
+  <style type="text/css">
+     body{
+         overflow:hidden;                                             /*(see note 2) */
+     }
+     .outputField, .label,.crystal-grid, img, .dialog, .dialog div {  /*(see note 3) */
+       -webkit-tap-highlight-color: rgba(0,0,0,0);
+     }
+   </style>
+ 
+  <title>Profound UI</title>  
+  <script type="text/javascript">
+    pui.serverURL ="http://myibmi";            // (see note 4)
+    window.onload = function() {
+         pui.run({program:"MYLIB/MYPROGRAM"}); // (see note 5)
+    };
+ 
+    document.addEventListener("deviceready", onDeviceReady, false);
+  
+    function onDeviceReady() {
+        document.addEventListener("backbutton", goBack ,false);
+    }
+ 
+    function goBack() {
+      if (getObj("btnBack") != null) pui.click("btnBack");
+      else if (getObj("btnExit") != null) pui.click("btnExit");
+      else navigator.app.exitApp();
+    }
+  
+   </script>
+
+   <script type="text/javascript" charset="utf-8">
+    document.onready = function() {
+      // document.getElementByTagName("nav").style.visibility = "visible";
+      // window.scrollTo( 0, 1 ); // pan to the bottom, hides the location bar
+      document.getElementById( "clickHereForCore" ).onclick = function( event ) {
+        clearNode( document.getElementById( "focusUser" ) );
+        clearNode( document.getElementById( "following" ) );
+        clearNode( document.getElementById( "followers" ) );
+        getOneUser( document.getElementById( "targetUser" ).value );
+      };
+      document.getElementById( "targetUser" ).onkeypress = function( event ) {
+        if( event.which == 13 ) {
+          clearNode( document.getElementById( "focusUser" ) );
+          clearNode( document.getElementById( "following" ) );
+          clearNode( document.getElementById( "followers" ) );
+          getOneUser( document.getElementById( "targetUser" ).value );
+        }
+      };
+      initCounterDisplay();
+    };
+
+  </script>
+</head>
+ 
+<body>
+  <div id="pui"></div>
+
+  		<div data-role="page" data-theme="a" class="theme">
+			<div data-role="header" data-position="inline" class="ui-bar-a">
+				<h1>Twitter Feed</h1>
+			</div>
+
+      <div data-role="navbar" class="nav">
+          <input type="search" name="search" id="targetUser" placeholder="ex: GCCIS" />
+          <input type="button" id="clickHereForCore" class="display" value="click"/>
+          <span id="api-calls">API calls this session: <span id="rate">0</span> (150/hour limit) </span>
+          <div data-role="controlgroup" data-type="horizontal" >
+              <ul>
+                  <li onclick = a(); id="in" data-role="button">Bio</li>
+                  <li onclick =makeMoney(); id="twee" data-role="button">Tweets</li>
+                  <li onclick =a(); id="foll" data-role="button">Following</li>
+                  <li onclick =a(); id="peeps" data-role="button">Followers</li>
+          </ul>
+          </div>  
+          
+      </div><!-- /navbar -->
+
+			<div data-role="content" data-theme="a">
+
+			  <div id="focusUser" class="display"></div>
+        <div id="isFollowing" class="display1"><h3 class="dopefiend">Following</h3><div id="following"></div></div>
+        <div id="isFollowedBy" class="display2"><h3 class="dopefiend">Followers</h3><div id="followers"></div></div>
+        <div id="putHere" class="display3"><h3 class="dopefiend">Tweets</h3><div id="wub"></div></div>
+		  </div>
+			
+      <div data-role="footer" class="ui-bar-a"> 
+        
+        <img src="twitter-bird.png">
+        <p style="font-size: 40%; font-style: italic; text-align: center;">Copywrite and bunch of stuff <br />
+          Duy Nguyen 2013</p> 
+			</div>
+		
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+                            $('.display1').hide();
+                            $('.display2').hide();
+                                $('.display3').hide();
+                            $('.display').show();
+
+                           $('#foll').click(function () {
+                                      $('.display1').show();
+                                      $('.display2').hide();
+                                      $('.display3').hide();
+                                      $('.display').hide();
+                           })
+
+                           $('#in').click(function () {
+                            $('.display1').hide();
+                            $('.display2').hide();
+                                $('.display3').hide();
+                            $('.display').show();
+                           })
+
+                           $('#twee').click(function () {
+                            $('.display1').hide();
+                            $('.display2').hide();
+                            $('.display').hide();
+                            $('.display3').show();
+                           })
+
+                           $('#peeps').click(function () {
+                            $('.display1').hide();
+                            $('.display2').show();
+                            $('.display').hide();
+                            $('.display3').hide();
+                           })
+
+              });
+  </script>
+</body>
+</html>
